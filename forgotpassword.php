@@ -47,9 +47,9 @@ else{
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/css/mdb.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
-<link href="indexes.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="css/reg.css">
 </head>
-<body>
+<body class='body'>
             <!--Form with header-->
 <div class="card card2">
     <div class="card-block">
@@ -76,13 +76,13 @@ else{
     </div>
 </div>
 
-<<!-- JQuery -->
+<!-- JQuery -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.min.js"></script>
 <!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/js/mdb.min.js"></script>>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/js/mdb.min.js"></script>
 </body>
 </html>

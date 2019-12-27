@@ -1,30 +1,29 @@
 <?php
-
-    include"connection.php";
+    include"connect.php";
     if(!isset($_GET['code'])){
         exit("cannot find page");
     }
     $code=$_GET['code'];
-    $getEmailQuery="SELECT email FROM resetpassword WHERE code='$code'";
-    $result=$conn->query($getEmailQuery);
-    if($result->num_rows==0){
+    $getEmailQuery=mysqli_query($conn,"SELECT email FROM resetpassword WHERE code='$code'");
+    if(mysqli_num_rows($getEmailQuery)==0)
+    {
         exit("cannot find page");  
-      }
-      if(isset($_POST['password'])){
-        $password=$_POST['password'];
-        $row=$result->fetch_assoc();
-        $email=$row['email'];
-    
-    $query="UPDATE register SET passwordd='$password' WHERE email='$email'";
-    if($query){
-        $query="DELETE FROM resetpassword WHERE code='$code'";
-        exit("password updated");
-      }
-      else{
-        exit("password not updated : Try again");
-      }
-
     }
+      
+    if(isset($_POST['submit'])){
+         $password=$_POST['password'];
+         $row=mysqli_fetch_array($getEmailQuery) ;
+         $email=$row['email'];
+         $query=mysqli_query($conn,"UPDATE register SET passwordd='$password' WHERE email='$email'");
+         if($query){
+            
+            $q=mysqli_query($conn,"DELETE FROM resetpassword WHERE code='$code'");
+            // echo("Password updated successfully");
+            header("location:login.php");
+         }
+        }
+    
+
 ?>
 <!doctype html>
 <head>
@@ -36,9 +35,9 @@
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/css/mdb.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
-<link href="indexes.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="css/reg.css">
 </head>
-<body>
+<body class='body'>
 
 <form method='POST'>
 <!--Form with header-->

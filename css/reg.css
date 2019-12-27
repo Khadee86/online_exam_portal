@@ -1,0 +1,18 @@
+*{
+    font-family: 'Solway', serif;
+}
+.card2{
+    margin:10%;
+    margin-left:35%;
+    width:40%;
+}
+.text1{
+    font-family: 'Lilita One', cursive;
+}
+.body{
+    background-image: url('../images/imgg3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+

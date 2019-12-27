@@ -8,6 +8,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+require 'connection.php';
 
 $code=uniqid(true);
 $query="INSERT INTO resetPassword(code,email) VALUES('$code','$email') ";
@@ -45,5 +46,6 @@ try {
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
+exit();
 
 ?>

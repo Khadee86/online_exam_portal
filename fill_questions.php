@@ -1,27 +1,30 @@
 <?php
 include "connection.php";
  session_start();
+ $qtype2='fill';
+ $_SESSION['fill']=$qtype2;
 //  $query="SELECT username FROM registers WHERE "
- echo $_SESSION['username'];
+//  echo $_SESSION['username'];
  if(isset($_POST['upload']))
  {
      
      $qno=$_POST['quest_no'];
      $question=$_POST['quest'];
-     $ans=$_POST['answer'];
-     $uname=$_SESSION['username'];
+     $mark=$_POST['mark'];
+    //  $ans=$_POST['answer'];
+    $uname=$_SESSION['username'];
      $quiz_text=$_SESSION['quiz_text'];
      if (empty($question)){
      echo"\nplease enter question\n"."<br>";
      }
-      if (empty($ans)){
-     echo"\nplease enter answer\n"."<br>";
-     }
+    //   if (empty($ans)){
+    //  echo"\nplease enter answer\n"."<br>";
+    //  }
 
-          $mysqli="INSERT INTO fill(Quiz_number,quiz_title,Question,Answer,registered_user)VALUES('$qno','$quiz_text','$question','$ans','$uname')";
+          $mysqli="INSERT INTO multiple_choice(Quiz_number,quiz_title,Question,mark,registered_user,quiz_type)VALUES('$qno','$quiz_text','$question','$mark','$uname','$_SESSION[fill]')";
    
           if ($conn->query($mysqli) === TRUE){
-              echo " question created successfully"."<br>";
+              // echo " question created successfully"."<br>";
                 }   
               else {
                     echo "Try inserting again"."<br>";
@@ -45,7 +48,7 @@ include "connection.php";
 <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
 <link href="questions.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body style="margin-left:10%;margin-right:10%;margin-top:10%;">
     <div>
     <h1 class="text1 purple-gradient"><?php echo $_SESSION['quiz_text']?></h1>
 </div>
@@ -53,10 +56,10 @@ include "connection.php";
 <div class="card cards">
 <form method="post">
   <div class="card-body card-content">
+  <p class="lead mb-0">Note: to make fill in th blank space use an underscore</p>
     <p class="lead mb-0">Question no. <input type="number" name='quest_no'id="exampleForm2" class="form-control"></p>
     <p class="lead mb-0">Enter question<input type="text"name='quest' id="exampleForm2" class="form-control form-control-lg"></p>
-
-    Answer<input name='answer'type="text" id="exampleForm2" class="form-control form-control-lg"><br>
+    Mark<input style='width:20%;'name='mark' type="text" id="exampleForm2" class="form-control form-control-lg"><br>
     <input class="btn purple-gradient" type="submit" name='upload'value="upload"><br>
   </div>
             <div class="d-flex flex-row-reverse">

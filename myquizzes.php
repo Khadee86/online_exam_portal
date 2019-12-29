@@ -1,45 +1,11 @@
 <?php
-//  include "connection.php";
-// $sql = "CREATE TABLE quizzz (
-//   ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-//   username VARCHAR(30),
-//   quiz_name VARCHAR(30),
-//   quiz_type VARCHAR(30),
-//    quiz_code VARCHAR(20),
-//   )";
-  
-//   if ($conn->query($sql) === TRUE) {
-//     //   echo "Table quizzz created successfully";
-//   } else {
-//       echo "Error creating table: " . $conn->error;
-//   }
 include "connection.php";
-//use once comment after;
- //include "q_table.php";
-
      session_start();
-     $qtype1='multiple_choice';
-     $_SESSION['multi']=$qtype1;
-    if(isset($_POST['submit']))
-    {
-        $code=uniqid(true);
-        $quiz_text=$_POST['quiz_text'];
-         $_SESSION['quiz_text']=$quiz_text;
-         $query="INSERT INTO quizzz(username,quiz_name,quiz_type,quiz_code)VALUES('$_SESSION[username]','$_SESSION[quiz_text]','$_SESSION[multi]','$code') ";
-         if ($conn->query($query) === TRUE){
-            $_SESSION['code']=$code;
-            header('location:fill_questions.php');
-              }   
-            else {
-                  echo "Try creating quiz  again"."<br>";
-                 }
-      
-    }
 ?>
 
 <!doctype html>
 <head>
-    <title>Questions</title> 
+    <title>MY Quizzes</title> 
     <link rel="stylesheet" href="dashboardcss.css">
     <!-- Scrollbar Custom CSS -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
@@ -59,7 +25,7 @@ include "connection.php";
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
-<body style="margin-left:10%;margin-right:10%;">
+<body>
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
@@ -80,7 +46,7 @@ include "connection.php";
                 <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
-                <a href="quiz.html" >My Quizzes</a>
+                <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
                 <a href="exams.html">Exams</a>
@@ -89,13 +55,13 @@ include "connection.php";
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#">Fill in the blank</a>
+                        <a href="q3.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="#">Theory</a>
+                        <a href="q2.php">Theory</a>
                     </li>
                 </ul>
             </li>
@@ -104,7 +70,7 @@ include "connection.php";
 
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="#" class="download">My account</a>
+                <a href="account.php" class="download">My account</a>
             </li>
             <!-- <li>
                 <input type='submit' name='logout'value='Log Out' class="download">
@@ -127,22 +93,68 @@ include "connection.php";
         
   </div>
   <div class="overlay"></div>
+  <h1 class="text1 purple-gradient" style="margin:10%; width:60%;color:white;">QUIZZES CREATED</h1>
+  <table class="table" style="margin:10%;width:60%;">
+  <thead class="purple-gradient white-text">
+    <tr>
+      <th scope="col">Quiz_name</th>
+      <th scope="col">Quiz_type</th>
+      <th scope="col">Quiz_code</th>
+    </tr>
+  </thead>
+  </table>
+
+  <?php
+    
+    $query="SELECT * FROM quizzz WHERE username='$_SESSION[username]'";
+    if ($result = $conn->query($query)) {
+        while ($row = $result->fetch_assoc()) {
+        
+    ?>
     <form method="post" >
-<div class="jumbotron text-center blue-grey lighten-5 jumbtron-wrap">
-  <h1 class="text1 purple-gradient">MULTIPLE CHOICE QUESTIONS</h1>
-  <div class="row d-flex justify-content-center">
-    <div class="col-xl-7 pb-2">
-      <h4 class="text1">Enter Title of Quiz
-        <input type="text" name="quiz_text" id="exampleForm2" class="form-control">
-      </h4>
-      <h4 class="text1">
-      <input name='submit'class="btn purple-gradient"type='submit'></h4>
+<table class="table" style="margin:10%;width:60%;">
+  <!-- <thead class="purple-gradient white-text">
+    <tr>
+      <th scope="col">Profile pic</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Username</th>
+      <th scope="col">Student ID</th>
+      <th scope="col">Student Level</th>
+    </tr>
+  </thead> -->
 
-    </div>
-  </div>
-</div>
+  
+  <tbody>
+    <tr>
+      <th scope="row"><?php echo $row['quiz_name']  ?></th>
+      <td><?php echo $row['quiz_type']  ?></td>
+      <td><?php echo $row['quiz_code']  ?></td>
+      <!-- <td><button  type="submit" class="btn purple-gradient btn-sm" name='view' >View</button></td>
+        <td><button  type="submit" class="btn purple-gradient btn-sm" name='delete' >Delete</button></td> -->
+    </tr>
+  </tbody>
+</table>
 </form>
-
+<?php
+       }
+    // }
+}
+?>
+<?php
+    // if(isset($_POST['delete']))
+    // {
+    //    $sql="DELETE FROM quizzz WHERE quiz_name='$row[quiz_name]' AND username='$_SESSION[username]'";
+    // //    $sqli="DELETE FROM multiple_choice WHERE quiz_text='row[quiz_name]' AND username='$_SESSION[username]' AND quiz_type='$row[quiz_type]'";
+    //    if($conn->query($sql)===TRUE){
+    //        echo "\nitem deleted successfully";
+    //    }
+    //    else{
+    //        echo "\nerror with deletion try again";
+    //    }
+    // }
+    ?>
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->

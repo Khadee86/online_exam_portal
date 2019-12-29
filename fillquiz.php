@@ -1,14 +1,15 @@
 <?php
     include "connection.php";
     session_start();
-    if(isset($_POST['Assign'])){
-        include"assignquiz2.php";
+
+    if(isset($_POST['finish'])){
+        
     }
 ?>
 
 <!doctype html>
 <head>
-    <title>Questions</title>
+    <title>Take theory Quiz|Student</title>
    <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Bootstrap core CSS -->
@@ -18,14 +19,14 @@
 <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
 <link href="questions.css" rel="stylesheet" type="text/css"/>
 </head>
-<body style="margin-left:10%;margin-right:10%;margin-top:10%;">
+<body style="margin-left:20%;margin-right:20%;margin-top:5%;">
 
 <div>
     <h1 class="text1 purple-gradient"><?php echo $_SESSION['quiz_text']?></h1>
 </div>
 
 <?php
-$query="SELECT quiz_title,Quiz_number,Question,Answer FROM multiple_choice WHERE registered_user='$_SESSION[username]' AND quiz_title='$_SESSION[quiz_text]'AND quiz_type='$_SESSION[fill]'";
+$query="SELECT quiz_title,Quiz_number,Question FROM multiple_choice WHERE registered_user='$_SESSION[username]' AND quiz_title='$_SESSION[quiz_text]' AND quiz_type='$_SESSION[fill]'";
 $result = $conn->query($query);
 if ($result->num_rows >0)
 {
@@ -41,6 +42,7 @@ if ($result->num_rows >0)
     // }
     
 ?>
+<p class="lead mb-0">Enter Answer <textarea class="form-control form-control-lg" id="exampleForm2" name="answer"></textarea>
     </div>
     </div>
   <?php  
@@ -49,9 +51,9 @@ if ($result->num_rows >0)
 ?>
 
 <div class="d-flex flex-row-reverse">
-<form method="post">
-        <input type="submit" class="btn purple-gradient" name="Assign" value="Assign quiz">
-</form>
+<form method='post'>
+                <input type="submit" class="btn purple-gradient" name="Assign" value="Finish Exam">
+        </form>
             </div> 
     <!-- JQuery -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

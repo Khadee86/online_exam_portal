@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2019 at 08:56 AM
+-- Generation Time: Dec 29, 2019 at 01:11 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.2.24
 
@@ -64,8 +64,42 @@ CREATE TABLE `multiple_choice` (
   `D` varchar(1000) DEFAULT NULL,
   `E` varchar(1000) DEFAULT NULL,
   `Answer` varchar(1000) DEFAULT NULL,
-  `registered_user` varchar(50) DEFAULT NULL
+  `mark` varchar(100) NOT NULL,
+  `registered_user` varchar(50) DEFAULT NULL,
+  `quiz_type` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `multiple_choice`
+--
+
+INSERT INTO `multiple_choice` (`quizID`, `quiz_title`, `Quiz_number`, `Question`, `A`, `B`, `C`, `D`, `E`, `Answer`, `mark`, `registered_user`, `quiz_type`) VALUES
+(16, 'quiz 101', 1, 'what is your name?', NULL, NULL, NULL, NULL, NULL, NULL, '3', 'khadee12', 'theory'),
+(17, 'quiz 101', 2, 'where do you go to school?', NULL, NULL, NULL, NULL, NULL, NULL, '5', 'khadee12', 'theory'),
+(23, 'quiz 101', 1, '_____is my favorite food.', NULL, NULL, NULL, NULL, NULL, NULL, '4', 'khadee12', 'fill');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quizzz`
+--
+
+CREATE TABLE `quizzz` (
+  `ID` int(6) UNSIGNED NOT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `quiz_name` varchar(30) DEFAULT NULL,
+  `quiz_type` varchar(30) NOT NULL,
+  `quiz_code` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `quizzz`
+--
+
+INSERT INTO `quizzz` (`ID`, `username`, `quiz_name`, `quiz_type`, `quiz_code`) VALUES
+(11, 'khadee12', 'quiz 101', 'theory', '15e0644b88e66e'),
+(12, 'khadee12', 'MID TERM EXAMS: PHY 108', 'multiple_choice', '15e0671b692b65'),
+(13, 'khadee12', 'quiz 101', 'fill', '15e0675ce3af26');
 
 -- --------------------------------------------------------
 
@@ -91,7 +125,10 @@ CREATE TABLE `register` (
 --
 
 INSERT INTO `register` (`ID`, `firstname`, `lastname`, `email`, `stud_id`, `stu_level`, `username`, `passwordd`, `photo`, `reg_date`) VALUES
-(1, 'khadijah', 'Badmos', 'khadijahbadmos@gmail.com', '181103010', '400', 'khadee12', '1234', 'shawn.jpg', '2019-12-25 07:49:25');
+(1, 'khadijah', 'Badmos', 'khadijahbadmos@gmail.com', '181103010', '400', 'khadee12', '1234', 'Caveman_Carving_the_Letter_D_Royalty_Free_Clipart_Picture_081025-185556-927048.jpg', '2019-12-25 08:08:46'),
+(8, 'hanifah', 'badmos', 'hanifahbadmos@gmail.com', '171103010', '200', 'yimbs_astro', '1233', 'jimin.jpg', '2019-12-28 16:48:10'),
+(9, 'zainab', 'idris', 'khadijah.badmos@aun.edu.ng', '18112020', '300', 'zeee19', '19999', '', '2019-12-26 22:51:14'),
+(10, 'Aisha', 'Yakubu', 'humairamadaki1@gmail.com', '1711030106', '500', 'humaira121', '1211', '', '2019-12-27 17:01:24');
 
 -- --------------------------------------------------------
 
@@ -105,6 +142,20 @@ CREATE TABLE `resetpassword` (
   `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `th`
+--
+
+CREATE TABLE `th` (
+  `ID` int(6) UNSIGNED NOT NULL,
+  `Quiz_number` int(11) DEFAULT NULL,
+  `quiz_title` varchar(30) DEFAULT NULL,
+  `Question` varchar(100) DEFAULT NULL,
+  `registered_user` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -114,6 +165,12 @@ CREATE TABLE `resetpassword` (
 --
 ALTER TABLE `multiple_choice`
   ADD PRIMARY KEY (`quizID`);
+
+--
+-- Indexes for table `quizzz`
+--
+ALTER TABLE `quizzz`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `register`
@@ -128,6 +185,12 @@ ALTER TABLE `resetpassword`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `th`
+--
+ALTER TABLE `th`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -135,19 +198,31 @@ ALTER TABLE `resetpassword`
 -- AUTO_INCREMENT for table `multiple_choice`
 --
 ALTER TABLE `multiple_choice`
-  MODIFY `quizID` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `quizID` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `quizzz`
+--
+ALTER TABLE `quizzz`
+  MODIFY `ID` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `ID` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `resetpassword`
 --
 ALTER TABLE `resetpassword`
   MODIFY `ID` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `th`
+--
+ALTER TABLE `th`
+  MODIFY `ID` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

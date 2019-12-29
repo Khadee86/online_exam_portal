@@ -18,16 +18,18 @@ include "connection.php";
  //include "q_table.php";
 
      session_start();
-     $qtype1='multiple_choice';
-     $_SESSION['multi']=$qtype1;
+     $qtype3='fill';
+    //  $code=uniqid(true);
+     $_SESSION['fill']=$qtype3;
+    //  echo $_SESSION['quiztype'];
     if(isset($_POST['submit']))
     {
         $code=uniqid(true);
         $quiz_text=$_POST['quiz_text'];
          $_SESSION['quiz_text']=$quiz_text;
-         $query="INSERT INTO quizzz(username,quiz_name,quiz_type,quiz_code)VALUES('$_SESSION[username]','$_SESSION[quiz_text]','$_SESSION[multi]','$code') ";
+         $query="INSERT INTO quizzz(username,quiz_name,quiz_type,quiz_code)VALUES('$_SESSION[username]','$_SESSION[quiz_text]','$_SESSION[fill]','$code') ";
          if ($conn->query($query) === TRUE){
-            $_SESSION['code']=$code;
+             $_SESSION['code']=$code;
             header('location:fill_questions.php');
               }   
             else {
@@ -39,7 +41,7 @@ include "connection.php";
 
 <!doctype html>
 <head>
-    <title>Questions</title> 
+    <title>Fill in Blank Question</title> 
     <link rel="stylesheet" href="dashboardcss.css">
     <!-- Scrollbar Custom CSS -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
@@ -129,10 +131,10 @@ include "connection.php";
   <div class="overlay"></div>
     <form method="post" >
 <div class="jumbotron text-center blue-grey lighten-5 jumbtron-wrap">
-  <h1 class="text1 purple-gradient">MULTIPLE CHOICE QUESTIONS</h1>
+  <h1 class="text1 purple-gradient">FILL IN THE BLANK QUESTIONS</h1>
   <div class="row d-flex justify-content-center">
     <div class="col-xl-7 pb-2">
-      <h4 class="text1">Enter Title of Quiz
+      <h4 class="text1">Enter Title of Quiz/Exam
         <input type="text" name="quiz_text" id="exampleForm2" class="form-control">
       </h4>
       <h4 class="text1">

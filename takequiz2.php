@@ -1,40 +1,21 @@
 <?php
-//  include "connection.php";
-// $sql = "CREATE TABLE quizzz (
-//   ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-//   username VARCHAR(30),
-//   quiz_name VARCHAR(30),
-//   quiz_type VARCHAR(30),
-//    quiz_code VARCHAR(20),
-//   )";
-  
-//   if ($conn->query($sql) === TRUE) {
-//     //   echo "Table quizzz created successfully";
-//   } else {
-//       echo "Error creating table: " . $conn->error;
-//   }
 include "connection.php";
-//use once comment after;
- //include "q_table.php";
+session_start();
 
-     session_start();
-     $qtype1='multiple_choice';
-     $_SESSION['multi']=$qtype1;
+
     if(isset($_POST['submit']))
     {
-        $code=uniqid(true);
-        $quiz_text=$_POST['quiz_text'];
-         $_SESSION['quiz_text']=$quiz_text;
-         $query="INSERT INTO quizzz(username,quiz_name,quiz_type,quiz_code)VALUES('$_SESSION[username]','$_SESSION[quiz_text]','$_SESSION[multi]','$code') ";
-         if ($conn->query($query) === TRUE){
-            $_SESSION['code']=$code;
-            header('location:fill_questions.php');
-              }   
-            else {
-                  echo "Try creating quiz  again"."<br>";
-                 }
-      
+        if($_POST['inputcode']==$_SESSION['code'])
+    {
+        header("location:fillquiz.php");
     }
+    }
+    if(!isset($_SESSION['username']))
+    {
+        header("location:login2.php");
+    }
+    else{
+        
 ?>
 
 <!doctype html>
@@ -59,7 +40,7 @@ include "connection.php";
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
-<body style="margin-left:10%;margin-right:10%;">
+<body>
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
@@ -129,11 +110,11 @@ include "connection.php";
   <div class="overlay"></div>
     <form method="post" >
 <div class="jumbotron text-center blue-grey lighten-5 jumbtron-wrap">
-  <h1 class="text1 purple-gradient">MULTIPLE CHOICE QUESTIONS</h1>
+  <h1 class="text1 purple-gradient"><?php echo $_SESSION['quiz_text']?></h1>
   <div class="row d-flex justify-content-center">
     <div class="col-xl-7 pb-2">
-      <h4 class="text1">Enter Title of Quiz
-        <input type="text" name="quiz_text" id="exampleForm2" class="form-control">
+      <h4 class="text1">Enter Exam Code generated below to take quiz<br><?php echo $_SESSION['code']?>
+        <input type="text" name="inputcode" id="exampleForm2" class="form-control">
       </h4>
       <h4 class="text1">
       <input name='submit'class="btn purple-gradient"type='submit'></h4>
@@ -156,3 +137,6 @@ include "connection.php";
 </script>
 </body>
 </html>
+<?php
+    }
+?>

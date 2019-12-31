@@ -42,7 +42,7 @@ try {
     // $mail->addReplyTo('@onlineexamportalgroup4@gmail.com', 'No reply');
     
     // Content
-    $url="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/takequiz.php?";
+    $url="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/takequiz2.php?";
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = $_SESSION['quiz_text'];
     $mail->Body    = "<h1>Hello!...Please click link below to take quiz</h1><br>

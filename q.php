@@ -28,7 +28,7 @@ include "connection.php";
          $query="INSERT INTO quizzz(username,quiz_name,quiz_type,quiz_code)VALUES('$_SESSION[username]','$_SESSION[quiz_text]','$_SESSION[multi]','$code') ";
          if ($conn->query($query) === TRUE){
             $_SESSION['code']=$code;
-            header('location:fill_questions.php');
+            header('location:questions.php');
               }   
             else {
                   echo "Try creating quiz  again"."<br>";
@@ -80,22 +80,22 @@ include "connection.php";
                 <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
-                <a href="quiz.html" >My Quizzes</a>
+                <a href="myquizzes,php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.html">Exams</a>
+                <a href="exams.php">Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#">Fill in the blank</a>
+                        <a href="q3.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="#">Theory</a>
+                        <a href="q2.php">Theory</a>
                     </li>
                 </ul>
             </li>
@@ -104,7 +104,7 @@ include "connection.php";
 
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="#" class="download">My account</a>
+                <a href="account.php" class="download">My account</a>
             </li>
             <!-- <li>
                 <input type='submit' name='logout'value='Log Out' class="download">

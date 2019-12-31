@@ -47,10 +47,10 @@ include "connection.php";
                 <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
-                <a href="quiz.html" >My Quizzes</a>
+                <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.html">Exams</a>
+                <a href="exams.php">Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>

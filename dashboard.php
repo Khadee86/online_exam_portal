@@ -1,6 +1,10 @@
 <?php
 include "connection.php";
     session_start();
+    if(!isset($_SESSION['username']))
+    {
+        header("location:login.php");
+    }
     //  echo "welcome ".$_SESSION['username']."<br>";
     if(isset($_POST['logout'])){
         if(session_destroy())
@@ -67,22 +71,22 @@ include "connection.php";
                 <a href="#">Dashboard</a>
             </li>
             <li>
-                <a href="quiz.html" >My Quizzes</a>
+                <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.html">Exams</a>
+                <a href="exams.php">Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#">Fill in the blank</a>
+                        <a href="q3.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="#">Theory</a>
+                        <a href="q2.php">Theory</a>
                     </li>
                 </ul>
             </li>
@@ -129,7 +133,7 @@ include "connection.php";
       <div class="card border-0 shadow">
         
         <div class="card-body text-center purple-gradient">
-        <a href="#">CREATE CLASS</a>
+        <a href="people.php">PEOPLE</a>
          
         </div>
       </div>
@@ -139,7 +143,7 @@ include "connection.php";
       <div class="card border-0 shadow">
         
         <div class="card-body text-center purple-gradient">
-          <a href="quiz.html">MY QUIZZES</a>
+          <a href="myquizzes.php">MY QUIZZES</a>
           
         </div>
       </div>
@@ -154,17 +158,17 @@ include "connection.php";
         </div>
       </div>
     </div>
-    <!-- Logout -->
-    <!-- <div class="col-xl-3 col-md-6 mb-4">
+    <!-- Exams -->
+    <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-0 shadow">
         
-        <div class="card-body text-center purple-gradient">
-        <a href="#">Create Class</a>
+        <div class="card-body purple-gradient">
+        <a href="exams.php">EXAMS</a>
           
         </div>
       </div>
     </div>
-  </div> -->
+
   <!-- /.row -->
 
 </div>

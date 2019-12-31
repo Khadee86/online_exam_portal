@@ -78,19 +78,19 @@
                 <a href="quiz.html" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.html">Exams</a>
+                <a href="exams.php">Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#">Fill in the blank</a>
+                        <a href="q3.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="#">Theory</a>
+                        <a href="q2.php">Theory</a>
                     </li>
                 </ul>
             </li>

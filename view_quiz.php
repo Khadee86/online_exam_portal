@@ -27,7 +27,7 @@
 <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
 <link href="questions.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body style="margin-left:10%;margin-right:10%;margin-top:10%;">
 <div>
     <h1 class="text1 purple-gradient"><?php echo $_SESSION['quiz_text']?></h1>
 </div>

@@ -2,14 +2,21 @@
     include "connection.php";
     session_start();
 
-    if(isset($_POST['finish'])){
-        
-    }
+    if(isset($_POST['Assign'])){
+        $sql1=" INSERT INTO view(username,quiz_title)VALUES('$_SESSION[username]','$_SESSION[quiz_text]') ";
+          if ($conn->query($sql1) === TRUE){
+            header('location:exams.php');
+              }   
+            else {
+                  echo "insert again"."<br>";
+                 }
+      
+        }
 ?>
 
 <!doctype html>
 <head>
-    <title>Take theory Quiz|Student</title>
+    <title>Take fill in the blank Quiz|Student</title>
    <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Bootstrap core CSS -->

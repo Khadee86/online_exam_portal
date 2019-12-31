@@ -1,26 +1,12 @@
 <?php
 include "connection.php";
-session_start();
-
-
-    if(isset($_POST['submit']))
-    {
-        if($_POST['inputcode']==$_SESSION['code'])
-    {
-        header("location:fillquiz.php");
-    }
-    }
-    if(!isset($_SESSION['username']))
-    {
-        header("location:login2.php");
-    }
-    else{
-        
+     session_start();
+    
 ?>
 
 <!doctype html>
 <head>
-    <title>Questions</title> 
+    <title>Exams</title> 
     <link rel="stylesheet" href="dashboardcss.css">
     <!-- Scrollbar Custom CSS -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
@@ -70,13 +56,13 @@ session_start();
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="q2.php">Fill in the blank</a>
+                        <a href="q3.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="q3.php">Theory</a>
+                        <a href="q2.php">Theory</a>
                     </li>
                 </ul>
             </li>
@@ -108,22 +94,49 @@ session_start();
         
   </div>
   <div class="overlay"></div>
+  <table class="table" style="margin:10%;width:60%;">
+  <thead class="purple-gradient white-text">
+    <tr>
+      <!-- <th scope="col">Profile pic</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th> -->
+      <th scope="col">Quiz</th>
+      <th scope="col">Username</th>
+      <th scope="col">quiz_type</th>
+      <th scope="col">Score</th>
+      <th scope="col">Date Taken</th>
+     <!--  <th scope="col">Student ID</th>
+      <th scope="col">Student Level</th> -->
+    </tr>
+  </thead>
+  </table>
+  <?php
+    
+    $query="SELECT * FROM view WHERE username = '$_SESSION[username]'";
+    if ($result = $conn->query($query)) {
+        while ($row = $result->fetch_assoc()) {
+       
+    ?>
     <form method="post" >
-<div class="jumbotron text-center blue-grey lighten-5 jumbtron-wrap">
-  <h1 class="text1 purple-gradient"><?php echo $_SESSION['quiz_text']?></h1>
-  <div class="row d-flex justify-content-center">
-    <div class="col-xl-7 pb-2">
-      <h4 class="text1">Enter Exam Code generated below to take quiz<br><?php echo $_SESSION['code']?>
-        <input type="text" name="inputcode" id="exampleForm2" class="form-control">
-      </h4>
-      <h4 class="text1">
-      <input name='submit'class="btn purple-gradient"type='submit'></h4>
+<table class="table" style="margin:10%;width:60%;">
 
-    </div>
-  </div>
-</div>
+  
+  <tbody>
+    <tr style="height:3%;">
+      <td><?php echo $row['quiz_title']  ?></td>
+      <td><?php echo $row['username']  ?></td>
+      <td><?php echo $row['quiz_type']  ?></td>
+      <td><?php echo $row['score']  ?></td>
+      <td><?php echo $row['reg_date']  ?></td>
+    </tr>
+  </tbody>
+</table>
 </form>
-
+<?php
+       }
+    // }
+}
+?>
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
@@ -137,6 +150,3 @@ session_start();
 </script>
 </body>
 </html>
-<?php
-    }
-?>

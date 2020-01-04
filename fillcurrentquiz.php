@@ -1,24 +1,43 @@
 <?php
+     session_start();
     include "connection.php";
-    session_start();
-
+    $sql="SELECT email FROM register WHERE username='$_SESSION[username]'";
+    $result=$conn->query($sql);
+    if ($result->num_rows >0)
+    {
+    while ($row = $result->fetch_assoc()) {
+            $_SESSION['email']=$row['email'];
+        }
+    }
     if(isset($_POST['Assign'])){
-        $sql1=" INSERT INTO view(username,quiz_title)VALUES('$_SESSION[username]','$_SESSION[quiz_text]') ";
-          if ($conn->query($sql1) === TRUE){
-            header('location:exams.php');
-              }   
-            else {
-                  echo "insert again"."<br>";
-                 }
+        include"assignquiz.php";
     }
     if(isset($_POST['Dashboard'])){
-      header("location:dashboard.php");
- } 
+        header("location:dashboard.php");
+   }
+   if(isset($_POST['Delete'])){
+    $query="DELETE FROM quizzz WHERE username='$_SESSION[username]' AND  quiz_name='$_SESSION[quiz]'AND quiz_type='fill'";
+       if($conn->query($query)===TRUE){
+        echo "\nitem deleted successfully"."<br>";
+       $sql="DELETE FROM multiple_choice WHERE registered_user='$_SESSION[username]' AND  quiz_title='$_SESSION[quiz]'AND quiz_type='fill'";
+       if($conn->query($sql)===TRUE){
+        header("location:myquizzes.php");
+        echo "\nrecord deleted successfully"."<br>";
+       }
+       else{
+           echo"error with deletion of record"."<br>";
+       }
+    }
+    else{
+        echo "\nerror with deletion try again";
+    }
+   }
 ?>
+
 
 <!doctype html>
 <head>
-    <title>Take theory Quiz|Student</title>
+    <title>Fill|View Quiz</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="css/forgotpassword.css"> -->
       <!-- Font Awesome -->
@@ -34,47 +53,44 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 <link href="questions.css" rel="stylesheet" type="text/css"/>
 </head>
-<body style="margin-left:20%;margin-right:20%;margin-top:5%;">
-<div class="d-flex flex-row">
+<body style="margin-left:10%;margin-right:10%;margin-top:10%;">
+  <div class="d-flex flex-row">
     <form method="post">
      <input type="submit" class="btn purple-gradient" name="Dashboard" value="Dashboard">
      </form>
  </div> 
 <div>
-    <h1 class="text1 purple-gradient"><?php echo $_SESSION['quiz_name']?></h1>
+    <h1 class="text1 purple-gradient"><?php echo  $_SESSION['quiz']?></h1>
 </div>
 
 <?php
-$query="SELECT quiz_title,Quiz_number,Question FROM multiple_choice WHERE registered_user='$_SESSION[username]' AND quiz_title='$_SESSION[quiz_text]' AND quiz_type='theory'";
+// echo"record was found";
+$query="SELECT quiz_title,Quiz_number,Question,mark,quiz_type FROM multiple_choice WHERE registered_user='$_SESSION[username]' AND  quiz_title='$_SESSION[quiz]'AND quiz_type='fill' ";
 $result = $conn->query($query);
 if ($result->num_rows >0)
 {
+    // echo"record was found";
     while ($row = $result->fetch_assoc()) {
+        // $_SESSION['quiz']=$row['quiz_title'];
         ?>
     <div class="card cards">
   <div class="card-body card-content">
-<?php 
-    echo "<p>". "Q.".$row["Quiz_number"] ."</br> "."Question: ".$row["Question"]."</br> "."</p>";
-    // if($row["Answer"]===$row["Answer"])
-    // {
-    //     echo "<p>"."Correct Answer: ".$row["Answer"]."</p>";
-    // }
-    
+  <?php 
+    echo "<p>". "Q.".$row["Quiz_number"] ."</br> "."Question: ".$row["Question"]."</br> ".$row["mark"]." marks"."</p>";
 ?>
-<p class="lead mb-0">Enter Answer <textarea class="form-control form-control-lg" id="exampleForm2" name="answer"></textarea>
     </div>
     </div>
   <?php  
     }
 }
 ?>
-
-<div class="d-flex flex-row-reverse">
 <form method='post'>
-                <input type="submit" class="btn purple-gradient" name="Assign" value="Finish Exam">
-        </form>
-            </div> 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
+<div class="d-flex flex-row-reverse">
+        <input type="submit" class="btn purple-gradient" name="Delete" value="Delete quiz">
+        <input type="submit" class="btn purple-gradient" name="Assign" value="Assign quiz">
+</div> 
+    </form>
+   <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>

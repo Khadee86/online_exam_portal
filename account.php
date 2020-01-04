@@ -36,7 +36,12 @@
     if(isset($_POST['lvl'])){
         header("location:update_lvl.php");
 }
-    
+   if(isset($_POST['logout'])){
+        if(session_destroy())
+        {
+        header("Location:index.php");
+        }
+    } 
 
    ?>
     
@@ -67,6 +72,7 @@
 
         <div class="sidebar-header purple-gradient">
             <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <!-- <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5> -->
         </div>
         
 
@@ -75,10 +81,16 @@
                 <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
-                <a href="quiz.html" >My Quizzes</a>
+                <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.php">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
@@ -102,7 +114,7 @@
             <a href="account.php" class="download">My account</a>
             </li>
             <li>
-                <input type='submit'style='color:#6d7fcc;' name='logout'value='Log Out' class="download">
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
             </li>
         </ul>
     </nav>
@@ -117,13 +129,16 @@
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
+        
+
+
+
 </div>
 
-<div class="overlay"></div>
-</form>
+<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
+
     <form method='post'>
 <div class="purple-gradient">
 	<div class="row login_box purple-gradient">

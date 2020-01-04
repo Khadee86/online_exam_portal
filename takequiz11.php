@@ -2,6 +2,12 @@
 include "connection.php";
 session_start();
 
+if(isset($_POST['logout'])){
+    if(session_destroy())
+    {
+    header("Location:index.php");
+    }
+}
 
     if(isset($_POST['submit']))
     {

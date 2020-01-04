@@ -18,6 +18,12 @@ include "connection.php";
  //include "q_table.php";
 
      session_start();
+     if(isset($_POST['logout'])){
+        if(session_destroy())
+        {
+        header("Location:index.php");
+        }
+    }
      $qtype1='multiple_choice';
      $_SESSION['multi']=$qtype1;
     if(isset($_POST['submit']))
@@ -63,6 +69,7 @@ include "connection.php";
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
+<form method="post">
 <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar" class="purple-gradient">
@@ -71,7 +78,8 @@ include "connection.php";
         </div>
 
         <div class="sidebar-header purple-gradient">
-        <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <!-- <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5> -->
         </div>
         
 
@@ -80,10 +88,16 @@ include "connection.php";
                 <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
-                <a href="myquizzes,php" >My Quizzes</a>
+                <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.php">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
@@ -104,13 +118,14 @@ include "connection.php";
 
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="account.php" class="download">My account</a>
+            <a href="account.php" class="download">My account</a>
             </li>
-            <!-- <li>
-                <input type='submit' name='logout'value='Log Out' class="download">
-            </li> -->
+            <li>
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
+            </li>
         </ul>
     </nav>
+
     <!-- Page Content  -->
     <div id="content">
 
@@ -121,11 +136,16 @@ include "connection.php";
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
         
-  </div>
+
+
+
+</div>
+
+<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
+
   <div class="overlay"></div>
     <form method="post" >
 <div class="jumbotron text-center blue-grey lighten-5 jumbtron-wrap">

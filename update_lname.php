@@ -45,6 +45,12 @@ else{
 if(isset($_POST['goback'])){
     header("location:account.php");
   }
+  if(isset($_POST['logout'])){
+    if(session_destroy())
+    {
+    header("Location:index.php");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,6 +89,7 @@ if(isset($_POST['goback'])){
 
         <div class="sidebar-header purple-gradient">
             <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <!-- <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5> -->
         </div>
         
 
@@ -94,7 +101,13 @@ if(isset($_POST['goback'])){
                 <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.php">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
@@ -118,7 +131,7 @@ if(isset($_POST['goback'])){
             <a href="account.php" class="download">My account</a>
             </li>
             <li>
-                <input type='submit'style='color:#6d7fcc;' name='logout'value='Log Out' class="download">
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
             </li>
         </ul>
     </nav>
@@ -133,12 +146,16 @@ if(isset($_POST['goback'])){
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
+        
+
+
+
 </div>
 
-<div class="overlay"></div>
+<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
+
 </form>
 <form action="" method="POST">
     <main class="my-form"style='margin-top:10%;'>

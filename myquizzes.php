@@ -1,6 +1,12 @@
 <?php
 include "connection.php";
      session_start();
+     if(isset($_POST['logout'])){
+        if(session_destroy())
+        {
+        header("Location:index.php");
+        }
+    }
 ?>
 
 <!doctype html>
@@ -29,6 +35,7 @@ include "connection.php";
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
+<form method="post">
 <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar" class="purple-gradient">
@@ -37,7 +44,8 @@ include "connection.php";
         </div>
 
         <div class="sidebar-header purple-gradient">
-        <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <!-- <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5> -->
         </div>
         
 
@@ -49,7 +57,13 @@ include "connection.php";
                 <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.php">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
@@ -70,13 +84,14 @@ include "connection.php";
 
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="account.php" class="download">My account</a>
+            <a href="account.php" class="download">My account</a>
             </li>
-            <!-- <li>
-                <input type='submit' name='logout'value='Log Out' class="download">
-            </li> -->
+            <li>
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
+            </li>
         </ul>
     </nav>
+
     <!-- Page Content  -->
     <div id="content">
 
@@ -87,14 +102,18 @@ include "connection.php";
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
         
-  </div>
-  <div class="overlay"></div>
-  <h1 class="text1 purple-gradient" style="margin:10%; width:60%;color:white;">QUIZZES CREATED</h1>
-  <table class="table" style="margin:10%;width:60%;">
+
+
+
+</div>
+
+<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
+
+  <!-- <h1 class="text1 purple-gradient" style="margin:10%; width:60%;color:white;">QUIZZES CREATED</h1> -->
+  <table class="table" style="margin:15%;width:60%;">
   <thead class="purple-gradient white-text">
     <tr>
       <th scope="col">Quiz_name</th>
@@ -102,59 +121,22 @@ include "connection.php";
       <th scope="col">Quiz_code</th>
     </tr>
   </thead>
-  </table>
 
   <?php
     
     $query="SELECT * FROM quizzz WHERE username='$_SESSION[username]'";
     if ($result = $conn->query($query)) {
         while ($row = $result->fetch_assoc()) {
-        
+            echo"<tr>";
+            echo"<td>".$row['quiz_name'] ."</td>";
+            echo"<td>".$row['quiz_type'] ."</td>";
+            echo"<td>".$row['quiz_code']."<?td>";
+            echo"</tr>";
+        }
+    }
     ?>
-    <form method="post" >
-<table class="table" style="margin:10%;width:60%;">
-  <!-- <thead class="purple-gradient white-text">
-    <tr>
-      <th scope="col">Profile pic</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Username</th>
-      <th scope="col">Student ID</th>
-      <th scope="col">Student Level</th>
-    </tr>
-  </thead> -->
+     </table>
 
-  
-  <tbody>
-    <tr>
-      <th scope="row"><?php echo $row['quiz_name']  ?></th>
-      <td><?php echo $row['quiz_type']  ?></td>
-      <td><?php echo $row['quiz_code']  ?></td>
-      <!-- <td><button  type="submit" class="btn purple-gradient btn-sm" name='view' >View</button></td>
-        <td><button  type="submit" class="btn purple-gradient btn-sm" name='delete' >Delete</button></td> -->
-    </tr>
-  </tbody>
-</table>
-</form>
-<?php
-       }
-    // }
-}
-?>
-<?php
-    // if(isset($_POST['delete']))
-    // {
-    //    $sql="DELETE FROM quizzz WHERE quiz_name='$row[quiz_name]' AND username='$_SESSION[username]'";
-    // //    $sqli="DELETE FROM multiple_choice WHERE quiz_text='row[quiz_name]' AND username='$_SESSION[username]' AND quiz_type='$row[quiz_type]'";
-    //    if($conn->query($sql)===TRUE){
-    //        echo "\nitem deleted successfully";
-    //    }
-    //    else{
-    //        echo "\nerror with deletion try again";
-    //    }
-    // }
-    ?>
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->

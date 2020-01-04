@@ -1,42 +1,42 @@
-
 <?php
+
 include "connection.php";
-session_start();
-if(isset($_POST['submit']))
-{
+//use once comment after;
+ //include "q_table.php";
+
+     session_start();
+    //  $_SESSION['quizname']=$_POST['quiz_text'];
+    if(isset($_POST['submit']))
+    {
+        if($_POST['quiz_type']==='multiple_choice')
+       {
+        $_SESSION['quiz']=$_POST['quiz_text'];
+        header("location:multicurrentquiz.php");
+       }
+        else if($_POST['quiz_type']==='theory')
+       {
+        $_SESSION['quiz']=$_POST['quiz_text'];
+        header("location:theorycurrentquiz.php");
+       }
+       else if($_POST['quiz_type']==='fill'){
+        $_SESSION['quiz']=$_POST['quiz_text'];
+        header("location:fillcurrentquiz.php");
+       }
+       else{
+           echo"wrong quiz type selected";
+       }
+    }
     if(isset($_POST['logout'])){
         if(session_destroy())
         {
         header("Location:index.php");
         }
     }
-     $sql="SELECT * FROM quizzz";
-    $result=$conn->query($sql);
-    if ($result->num_rows >0)
-    {
-    while ($row = $result->fetch_assoc()) {
-        if(($_POST['inputcode']==$row['quiz_code'])&&($_POST['title']==$row['quiz_name']))
-    {
-        $_SESSION['quiz_name']=$_POST['title'];
-        header("location:multiquiz.php");
-    }
-    else{
-        echo"wrong code or quiz title <br> PLease try again";
-    }
-}
-}
-     }  
-     if(isset($_POST['logout'])){
-        if(session_destroy())
-        {
-        header("Location:index.php");
-        }
-    }  
 ?>
 
 <!doctype html>
 <head>
-    <title>Questions</title> 
+    <title>View Current Quiz Questions</title> 
     <link rel="stylesheet" href="dashboardcss.css">
     <!-- Scrollbar Custom CSS -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
@@ -139,14 +139,19 @@ if(isset($_POST['submit']))
 
     <form method="post" >
 <div class="jumbotron text-center blue-grey lighten-5 jumbtron-wrap">
-  <!-- <h1 class="text1 purple-gradient"><?php ?></h1> -->
+  <!-- <h1 class="text1 purple-gradient">Enter Quiz Title you want to View</h1> -->
   <div class="row d-flex justify-content-center">
     <div class="col-xl-7 pb-2">
-    <h4 class="text1">Quiz Title<br>
-        <input type="text" name="title" id="exampleForm2" class="form-control">
+      <h4 class="text1">Enter Quiz Title you want to View
+        <input type="text" name="quiz_text" id="exampleForm2" class="form-control">
       </h4>
-      <h4 class="text1">Enter Exam Code from email sent to take quiz<br>
-        <input type="text" name="inputcode" id="exampleForm2" class="form-control">
+      <h4 class="text1">Enter Quiz Type
+      <select class="browser-default custom-select custom-select-lg mb-3" name='quiz_type'>
+                <option disabled selected>Quiz type</option>
+                        <option>multiple_choice</option>
+                        <option>fill</option>
+                        <option>theory</option>
+              </select>
       </h4>
       <h4 class="text1">
       <input name='submit'class="btn purple-gradient"type='submit'></h4>
@@ -169,6 +174,3 @@ if(isset($_POST['submit']))
 </script>
 </body>
 </html>
-<?php
-    // }
-?>

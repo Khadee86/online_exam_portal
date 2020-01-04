@@ -2,20 +2,27 @@
 include "connection.php";
 session_start();
 
-
-    if(isset($_POST['submit']))
+$sql="SELECT * FROM quizzz";
+    $result=$conn->query($sql);
+    if ($result->num_rows >0)
     {
-        if($_POST['inputcode']==$_SESSION['code'])
+    while ($row = $result->fetch_assoc()) {
+        if(($_POST['inputcode']==$row['quiz_code'])&&($_POST['title']==$row['quiz_name']))
     {
+        $_SESSION['quiz_name']=$_POST['title'];
         header("location:fillquiz.php");
     }
-    }
-    if(!isset($_SESSION['username']))
-    {
-        header("location:login2.php");
-    }
     else{
-        
+        echo"wrong code or quiz title <br> PLease try again";
+    }
+}
+}
+if(isset($_POST['logout'])){
+    if(session_destroy())
+    {
+    header("Location:index.php");
+    }
+}      
 ?>
 
 <!doctype html>
@@ -40,10 +47,11 @@ session_start();
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="margin-left:10%;margin-right:10%;">
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
+<form method="post">
 <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar" class="purple-gradient">
@@ -52,7 +60,8 @@ session_start();
         </div>
 
         <div class="sidebar-header purple-gradient">
-        <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <!-- <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5> -->
         </div>
         
 
@@ -64,19 +73,25 @@ session_start();
                 <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.php">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="q2.php">Fill in the blank</a>
+                        <a href="q3.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="q3.php">Theory</a>
+                        <a href="q2.php">Theory</a>
                     </li>
                 </ul>
             </li>
@@ -85,13 +100,14 @@ session_start();
 
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="account.php" class="download">My account</a>
+            <a href="account.php" class="download">My account</a>
             </li>
-            <!-- <li>
-                <input type='submit' name='logout'value='Log Out' class="download">
-            </li> -->
+            <li>
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
+            </li>
         </ul>
     </nav>
+
     <!-- Page Content  -->
     <div id="content">
 
@@ -102,12 +118,16 @@ session_start();
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
         
-  </div>
-  <div class="overlay"></div>
+
+
+
+</div>
+
+<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
+
     <form method="post" >
 <div class="jumbotron text-center blue-grey lighten-5 jumbtron-wrap">
   <h1 class="text1 purple-gradient"><?php echo $_SESSION['quiz_text']?></h1>

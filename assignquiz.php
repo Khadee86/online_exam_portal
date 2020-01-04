@@ -42,17 +42,19 @@ try {
     // $mail->addReplyTo('@onlineexamportalgroup4@gmail.com', 'No reply');
     
     // Content
-    $url="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/takequiz2.php?";
+    $url="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/login12.php?";
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = $_SESSION['quiz_text'];
-    $mail->Body    = "<h1>Hello!...Please click link below to take quiz</h1><br>
-                        <a href='$url'>Take Quiz</a><br>Please 
+    $mail->Body    =   "<h1>Hello!...Please click link below to take quiz</h1><br>
+                        <a href='$url'>Take Quiz</a><br>
+                        This is the the Quiz title you insert: '$_SESSION[quiz_text]'<br>
+                        This is the quiz code you insert: '$_SESSION[code]'<br>Please 
                         Ignore if youre not for this quiz";
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
-    header("location:view_quiz.php");
-    // echo 'link to change password has been sent to your email'.'<br>';
+    // header("location:view_quiz.php");
+    echo 'You have successfully assigned quiz to all registered users'.'<br>';
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }

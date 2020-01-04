@@ -3,7 +3,7 @@ $server="localhost";
 $password="";
 $username="root";
 $dbName="online_exam_portal";
-$table_name="register";
+$table_name="multiple_choice";
 $conn=mysqli_connect($server,$username,$password);
 if(!$conn){die("error in connection<br>");
 }
@@ -19,17 +19,20 @@ if(isset($_POST["submit"]))
     $password="";
     $username="root";
     $dbName="online_exam_portal";
-    $table_name="register";
+    $table_name="multiple_choice";
    
     $conn=mysqli_connect($server,$username,$password,$dbName);
     if(!$conn){die("error in connection2<br>");}
         // else{echo "update connection successful..<br>";}
     
 
-$email=$_POST["email"];
+$opt=$_POST["opt"];
+$title=$_POST["title"];
+$num=$_POST["num"];
 
 
-$sql="UPDATE register SET email='$email' WHERE username='$_SESSION[username]'";
+
+$sql="UPDATE multiple_choice SET A='$opt' WHERE registered_user='$_SESSION[username]' AND quiz_title = '$title' AND Quiz_number = '$num' AND quiz_type ='multiple_choice'";
 
 if(mysqli_query($conn, $sql))
 {
@@ -37,20 +40,14 @@ if(mysqli_query($conn, $sql))
 
 }
 else{
-    echo "could not update your profile<br>";
+    echo "could not update the question<br>";
 }
 
 }
+
 if(isset($_POST['goback'])){
-    header("location:account.php");
+    header("location:editmulti.php");
   }
-  if(isset($_POST['logout'])){
-    if(session_destroy())
-    {
-    header("Location:index.php");
-    }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,8 +55,6 @@ if(isset($_POST['goback'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="dashboardcss.css">
 <!-- Bootstrap core CSS -->
@@ -68,14 +63,17 @@ if(isset($_POST['goback'])){
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/css/mdb.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+
+
     <link rel="stylesheet" href="style10.css">
-    <title>update profile</title>
+    <title>Edit Question</title>
     <style>
     .update{display:flex;justify-content:space-between;}
     #show{display:none;}
     </style>
 </head>
 <body>
+
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
@@ -89,7 +87,6 @@ if(isset($_POST['goback'])){
 
         <div class="sidebar-header purple-gradient">
             <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
-            <!-- <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5> -->
         </div>
         
 
@@ -101,25 +98,19 @@ if(isset($_POST['goback'])){
                 <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="viewcurrentquiz.php">View Quiz created</a>
-            </li>
-            <li>
-                <a href="edit.php">Edit Quiz Created</a>
-            </li>
-            <li>
-                <a href="exams.php">My Exams</a>
+                <a href="exams.php">Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="q3.php">Fill in the blank</a>
+                        <a href="q2.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="q2.php">Theory</a>
+                        <a href="q3.php">Theory</a>
                     </li>
                 </ul>
             </li>
@@ -131,7 +122,7 @@ if(isset($_POST['goback'])){
             <a href="account.php" class="download">My account</a>
             </li>
             <li>
-                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
+                <input type='submit'style='color:#6d7fcc;' name='logout'value='Log Out' class="download">
             </li>
         </ul>
     </nav>
@@ -146,16 +137,12 @@ if(isset($_POST['goback'])){
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
+                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
-        
-
-
-
 </div>
 
-<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
-
+<div class="overlay"></div>
 </form>
 <form action="" method="POST">
     <main class="my-form" style='margin-top:10%;'>
@@ -164,19 +151,37 @@ if(isset($_POST['goback'])){
                     <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header purple-gradient">
-                                    <strong>UPDATE EMAIL</strong>
+                                    <strong style='color:white;'>Edit Multi choice</strong>
                                 </div>
-                                <div class="form-group row">
-                                            <label for="emailaddress" class="col-md-4 col-form-label text-md-right">Email Address</label>
+                                <div class="card-body">
+                                    <form name=>
+                                        <div class="form-group row">
+                                            <label for="Option" class="col-md-4 col-form-label text-md-right">Option</label>
                                             <div class="col-md-6">
-                                                <input type="text" id="" class="form-control" name="email">
+                                                <input type="text" id="" class="form-control" name="opt">
                                             </div>
                                         </div>
-
-        
+                                </div>     
+                                <div class="card-body">   
+                                        <div class="form-group row">
+                                            <label for="quiz title" class="col-md-4 col-form-label text-md-right">Quiz Title</label>
+                                            <div class="col-md-6">
+                                                <input type="text" id="" class="form-control" name="title">
+                                            </div>
+                                        </div>
+                                </div> 
+                                <div class="card-body">   
+                                        <div class="form-group row">
+                                            <label for="quiz number" class="col-md-4 col-form-label text-md-right">Quiz Number</label>
+                                            <div class="col-md-6">
+                                                <input type="text" id="" class="form-control" name="num">
+                                            </div>
+                                        </div>
+                                </div>       
+                                <div class="card-body">
                                             <div class="col-md-6 offset-md-4">
                                                     <!-- <button type="button" class="btn btn-purple" name="submit">update</button> -->
-                                                    <input type="submit" name="submit" class="btn purple-gradient" value='update email'>
+                                                    <input type="submit" name="submit" class="btn purple-gradient" value='Edit'>
                                              
                                             </div>
                                         </div>
@@ -192,7 +197,6 @@ if(isset($_POST['goback'])){
         
         </main>
 </form>        
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

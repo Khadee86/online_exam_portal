@@ -1,7 +1,12 @@
 <?php
 include "connection.php";
      session_start();
-    
+     if(isset($_POST['logout'])){
+        if(session_destroy())
+        {
+        header("Location:index.php");
+        }
+    }
 ?>
 
 <!doctype html>
@@ -30,6 +35,7 @@ include "connection.php";
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
+<form method="post">
 <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar" class="purple-gradient">
@@ -38,7 +44,7 @@ include "connection.php";
         </div>
 
         <div class="sidebar-header purple-gradient">
-        <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
+            <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
         </div>
         
 
@@ -50,7 +56,13 @@ include "connection.php";
                 <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.php">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
@@ -71,13 +83,14 @@ include "connection.php";
 
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="account.php" class="download">My account</a>
+            <a href="account.php" class="download">My account</a>
             </li>
-            <!-- <li>
-                <input type='submit' name='logout'value='Log Out' class="download">
-            </li> -->
+            <li>
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
+            </li>
         </ul>
     </nav>
+
     <!-- Page Content  -->
     <div id="content">
 
@@ -88,16 +101,18 @@ include "connection.php";
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
         
-  </div>
-  <div class="overlay"></div>
+
+
+
+</div>
+
+<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
   <table class="table" style="margin:10%;width:60%;">
   <thead class="purple-gradient white-text">
     <tr>
-      <th scope="col">Profile pic</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
@@ -106,49 +121,24 @@ include "connection.php";
       <th scope="col">Student Level</th>
     </tr>
   </thead>
-  </table>
   <?php
     
     $query="SELECT * FROM register";
     if ($result = $conn->query($query)) {
         while ($row = $result->fetch_assoc()) {
-        // while(mysqli_num_rows($query)!=0){
-        //    while( $row=mysqli_fetch_array($query)){
-            $image = $row['photo'];
-            $image_src = "upload/".$image;
+            echo"<tr>";
+            echo"<td>".$row['firstname']."</td>";
+            echo"<td>". $row['lastname'] ."</td>";
+            echo"<td>".$row['email']."<?td>";
+            echo"<td>".$row['username']."<?td>";
+            echo"<td>".$row['stud_id'] ."<?td>";
+            echo"<td>".$row['stu_level'] ."<?td>";
+            echo"</tr>";
+        }
+    }
     ?>
-    <form method="post" >
-<table class="table" style="margin:10%;width:60%;">
-  <!-- <thead class="purple-gradient white-text">
-    <tr>
-      <th scope="col">Profile pic</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Username</th>
-      <th scope="col">Student ID</th>
-      <th scope="col">Student Level</th>
-    </tr>
-  </thead> -->
-
-  
-  <tbody>
-    <tr style="height:3%;">
-      <th scope="row"><img src='<?php echo $image_src;  ?>'style="border-radius:50%; width:100px;"/></th>
-      <td><?php echo $row['firstname']  ?></td>
-      <td><?php echo $row['lastname']  ?></td>
-      <td><?php echo $row['email']  ?></td>
-      <td><?php echo $row['username']  ?></td>
-      <td><?php echo $row['stud_id']  ?></td>
-      <td><?php echo $row['stu_level']  ?></td>
-    </tr>
-  </tbody>
+    
 </table>
-</form>
-<?php
-       }
-    // }
-}
 ?>
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

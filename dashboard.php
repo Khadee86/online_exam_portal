@@ -68,13 +68,19 @@ include "connection.php";
 
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="#">Dashboard</a>
+                <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
                 <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.php">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
@@ -98,7 +104,7 @@ include "connection.php";
             <a href="account.php" class="download">My account</a>
             </li>
             <li>
-                <input type='submit' name='logout'value='Log Out' class="download">
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
             </li>
         </ul>
     </nav>
@@ -113,7 +119,6 @@ include "connection.php";
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
         

@@ -52,7 +52,6 @@ if(isset($_POST['logout'])){
 <link rel="stylesheet" href="dashboardcss.css">
 </head>
 <body>
-
 <div class="top purple-gradient">
         Online Exam Portal
     </div> 
@@ -66,8 +65,7 @@ if(isset($_POST['logout'])){
 
         <div class="sidebar-header purple-gradient">
             <h3 style="color:white;"><?php echo "Welcome ".$_SESSION['username']."<br>" ?></h3>
-            <h4 style="color:white;"><?php echo $_SESSION['role']."<br>" ?></h4>
-            <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5>
+            <!-- <h5 style="color:white;"><?php echo  $_SESSION['email']."<br>" ?></h5> -->
         </div>
         
 
@@ -76,22 +74,28 @@ if(isset($_POST['logout'])){
                 <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
-                <a href="quiz.html" >My Quizzes</a>
+                <a href="myquizzes.php" >My Quizzes</a>
             </li>
             <li>
-                <a href="exams.html">Exams</a>
+                <a href="viewcurrentquiz.php">View Quiz created</a>
+            </li>
+            <li>
+                <a href="edit.php">Edit Quiz Created</a>
+            </li>
+            <li>
+                <a href="exams.php">My Exams</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Create an exam</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#">Fill in the blank</a>
+                        <a href="q3.php">Fill in the blank</a>
                     </li>
                     <li>
                         <a href="q.php">Multi-Choice</a>
                     </li>
                     <li>
-                        <a href="#">Theory</a>
+                        <a href="q2.php">Theory</a>
                     </li>
                 </ul>
             </li>
@@ -103,7 +107,7 @@ if(isset($_POST['logout'])){
             <a href="account.php" class="download">My account</a>
             </li>
             <li>
-                <input type='submit'style='color:#6d7fcc;' name='logout'value='Log Out' class="download">
+                <a class="download"><input type='submit' name='logout'value='Log Out' class="download"></a>
             </li>
         </ul>
     </nav>
@@ -118,12 +122,15 @@ if(isset($_POST['logout'])){
                     <i class="fas fa-align-left"></i>
                     <span>Dashboard</span>
                 </button>
-                <a href="#"><img src="images/new_logo.png" alt=""></a>
             </div>
         </nav>
+        
+
+
+
 </div>
 
-<div class="overlay"></div>
+<div class="overlay"></div><br><br><br><br><br><br><br><br><br>
 </form>
 
 <div class="card card-cascade wider" style='margin-top:10%;'>
@@ -141,7 +148,7 @@ if(isset($_POST['logout'])){
 
 
  <!-- jQuery CDN - Slim version (=without AJAX) -->
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -150,4 +157,5 @@ if(isset($_POST['logout'])){
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
 <script type="text/javascript" src="js/dashboard.js">
+</script>
 </body>
